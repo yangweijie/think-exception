@@ -1,0 +1,39 @@
+{
+    "name": "yangweijie/think-exception",
+    "description": "一个 ThinkPHP 中 可以打开错误异常文件的异常处理",
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "topthink/framework": "6.0.* | 6.1.* | 8.*"
+    },
+
+    "authors": [
+        {
+            "name": "yangweijie",
+            "email": "917647288@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "yangweijie\\exception\\": "src"
+        }
+    },
+    "support": {
+        "email": "917647288@qq.com"
+    },
+    "extra": {
+        "think": {
+            "services": [
+                "yangweijie\\exception\\ExceptionService"
+            ],
+            "config": {
+                "exception": "config/config.php"
+            }
+        }
+    },
+    "scripts":{
+        "post-autoload-dump": [
+            "yangweijie\\exception\\Install::config"
+        ]
+    }
+}
