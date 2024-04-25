@@ -2,7 +2,11 @@
     "name": "yangweijie/think-exception",
     "description": "一个 ThinkPHP 中 可以打开错误异常文件的异常处理",
     "license": "MIT",
-    "type": "library",
+    "keywords": [
+        "framework",
+        "thinkphp",
+        "exception"
+    ],
     "require": {
         "php": ">=7.4",
         "topthink/framework": "^6.0 | ^6.1 | ^8.0"
@@ -36,5 +40,10 @@
         "post-autoload-dump": [
             "yangweijie\\exception\\Install::config"
         ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
     }
 }
