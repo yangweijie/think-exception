@@ -14,23 +14,23 @@ return [
         ],
         'sublime' => [
             'label' => 'Sublime',
-            'url' => 'subl://open?url=file://%path&line=%line',
+            'url' => 'subl://open?url=file://%file&line=%line',
         ],
         'textmate' => [
             'label' => 'TextMate',
-            'url' => 'txmt://open?url=file://%path&line=%line',
+            'url' => 'txmt://open?url=file://%file&line=%line',
         ],
         'emacs' => [
             'label' => 'Emacs',
-            'url' => 'emacs://open?url=file://%path&line=%line',
+            'url' => 'emacs://open?url=file://%file&line=%line',
         ],
         'macvim' => [
             'label' => 'MacVim',
-            'url' => 'mvim://open/?url=file://%path&line=%line',
+            'url' => 'mvim://open/?url=file://%file&line=%line',
         ],
         'phpstorm' => [
             'label' => 'PhpStorm',
-            'url' => 'phpstorm://open?file=%path&line=%line',
+            'url' => 'phpstorm://open?file=%file&line=%line',
         ],
         'phpstorm-remote' => [
             'label' => 'PHPStorm Remote',
@@ -38,31 +38,31 @@ return [
         ],
         'idea' => [
             'label' => 'Idea',
-            'url' => 'idea://open?file=%path&line=%line',
+            'url' => 'idea://open?file=%file&line=%line',
         ],
         'vscode' => [
             'label' => 'VS Code',
-            'url' => 'vscode://file/%path:%line',
+            'url' => 'vscode://file/%file:%line',
         ],
         'vscode-insiders' => [
             'label' => 'VS Code Insiders',
-            'url' => 'vscode-insiders://file/%path:%line',
+            'url' => 'vscode-insiders://file/%file:%line',
         ],
         'vscode-remote' => [
             'label' => 'VS Code Remote',
-            'url' => 'vscode://vscode-remote/%path:%line',
+            'url' => 'vscode://vscode-remote/file/%file:%line',
         ],
         'vscode-insiders-remote' => [
             'label' => 'VS Code Insiders Remote',
-            'url' => 'vscode-insiders://vscode-remote/%path:%line',
+            'url' => 'vscode-insiders://vscode-remote/file/%file:%line',
         ],
         'vscodium' => [
             'label' => 'VS Codium',
-            'url' => 'vscodium://file/%path:%line',
+            'url' => 'vscodium://file/%file:%line',
         ],
         'atom' => [
             'label' => 'Atom',
-            'url' => 'atom://core/open/file?filename=%path&line=%line',
+            'url' => 'atom://core/open/file?filename=%file&line=%line',
         ],
         'nova' => [
             'label' => 'Nova',
@@ -70,7 +70,7 @@ return [
         ],
         'netbeans' => [
             'label' => 'NetBeans',
-            'url' => 'netbeans://open/?f=%path:%line',
+            'url' => 'netbeans://open/?f=%file:%line',
         ],
         'xdebug' => [
             'label' => 'Xdebug',
