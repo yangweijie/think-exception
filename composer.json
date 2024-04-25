@@ -4,7 +4,7 @@
     "license": "MIT",
     "type": "library",
     "require": {
-        "topthink/framework": "6.0.* | 6.1.* | 8.*"
+        "topthink/framework": "^6.0 | ^6.1 | ^8.0"
     },
 
     "authors": [
