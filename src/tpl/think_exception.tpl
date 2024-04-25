@@ -319,26 +319,26 @@ echo 'Resource';
     <div class="trace">
         <h2 data-expand="<?php echo 0 === $index ? '1' : '0'; ?>">Call Stack</h2>
         <ol>
-            <li><?php echo sprintf('in %s', parse_file($trace['file'], $trace['line'])); ?></li>
+            <li><?php echo sprintf('in %s', parse_file($trace['file'], $trace['line'], $trace['editor'])); ?></li>
             <?php foreach ((array) $trace['trace'] as $value) { ?>
             <li>
                 <?php
-                        // Show Function
-                        if ($value['function']) {
-                            echo sprintf(
-                                'at %s%s%s(%s)',
-                                isset($value['class']) ? parse_class($value['class']) : '',
-                                isset($value['type'])  ? $value['type'] : '',
-                                $value['function'],
-                                isset($value['args'])?parse_args($value['args']):''
-                            );
-                        }
+                    // Show Function
+                    if ($value['function']) {
+                        echo sprintf(
+                            'at %s%s%s(%s)',
+                            isset($value['class']) ? parse_class($value['class']) : '',
+                            isset($value['type'])  ? $value['type'] : '',
+                            $value['function'],
+                            isset($value['args'])?parse_args($value['args']):''
+                        );
+                    }
 
-                        // Show line
-                        if (isset($value['file']) && isset($value['line'])) {
-                            echo sprintf(' in %s', parse_file($value['file'], $value['line']));
-                        }
-                        ?>
+                    // Show line
+                    if (isset($value['file']) && isset($value['line'])) {
+                        echo sprintf(' in %s', parse_file($value['file'], $value['line'], $value['editor']));
+                    }
+                    ?>
             </li>
             <?php } ?>
         </ol>

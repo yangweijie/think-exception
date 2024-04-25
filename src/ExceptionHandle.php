@@ -18,7 +18,7 @@ use Throwable;
  */
 class ExceptionHandle extends Handle {
 
-    protected $app;
+    protected App $app;
 
     public function __construct(App $app)
     {

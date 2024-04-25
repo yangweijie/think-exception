@@ -4,6 +4,7 @@
     "license": "MIT",
     "type": "library",
     "require": {
+        "php": ">=7.4",
         "topthink/framework": "^6.0 | ^6.1 | ^8.0"
     },
 
