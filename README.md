@@ -3,19 +3,7 @@ exception for ThinkPHP
 ## 安装
 `composer require yangweijie/think-exception`
 
-修改 app下provider
-
-~~~
-<?php
-use think\exception\ExceptionHandle;
-use app\Request;
-
-// 容器Provider定义文件
-return [
-    'think\Request'          => Request::class,
-    'think\exception\Handle' => ExceptionHandle::class,
-];
-~~~
+.env 里 app_debug=true
 
 将 app.show_error_msg  设为 true
 
@@ -24,3 +12,9 @@ return [
 'show_error_msg'   => true,
 ~~~
 
+## 配置设置 exception.php里 editor
+
+~~~
+ // 当前编辑器
+'editor' => 'vscode',
+~~~
