@@ -3,7 +3,7 @@
 if (!function_exists('parse_padding')) {
     function parse_padding($source)
     {
-        $length  = strlen(strval(count($source['source']) + $source['first']));
+        $length = strlen(strval(count($source['source']) + $source['first']));
         return 40 + ($length - 1) * 8;
     }
 }
@@ -12,19 +12,19 @@ if (!function_exists('parse_class')) {
     function parse_class($name)
     {
         $names = explode('\\', $name);
-        return '<abbr title="'.$name.'">'.end($names).'</abbr>';
-    }
+        return '<abbr title="' . $name . '">' . end($names) . '</abbr>';
+}
 }
 
 if (!function_exists('parse_file')) {
-    function parse_file($file, $line, $editor = '')
-    {
-        if($editor){
-            return '<a class="toggle" title="'."{$editor} line {$line}".'" href="'.$editor.'">'.basename($file)." line {$line}".'</a>';
-        }else{
-            return '<a class="toggle" title="'."{$file} line {$line}".'">'.basename($file)." line {$line}".'</a>';
-        }
-    }
+function parse_file($file, $line, $editor = '')
+{
+if ($editor) {
+return '<a class="toggle" title="' . "{$editor} line {$line}" . '" href="' . $editor . '">' . basename($file) . " line {$line}" . '</a>';
+} else {
+return '<a class="toggle" title="' . "{$file} line {$line}" . '">' . basename($file) . " line {$line}" . '</a>';
+}
+}
 }
 
 if (!function_exists('parse_args')) {
@@ -92,9 +92,20 @@ echo 'Resource';
 }
 }
 }
+if(!function_exists('getEditorHref')){
+function getEditorHref($file, $line){
+static $handle;
+if(!$handle){
+$handle = new \yangweijie\exception\ExceptionHandle(app());
+}
+return $handle->getEditorHref($file, $line);
+}
+}
+
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>系统发生错误</title>
@@ -107,13 +118,15 @@ echo 'Resource';
             margin: 0;
             padding: 0 20px 20px;
         }
-        h1{
+
+        h1 {
             margin: 10px 0 0;
             font-size: 28px;
             font-weight: 500;
             line-height: 32px;
         }
-        h2{
+
+        h2 {
             color: #4288ce;
             font-weight: 400;
             padding: 6px 0;
@@ -121,29 +134,36 @@ echo 'Resource';
             font-size: 18px;
             border-bottom: 1px solid #eee;
         }
-        h3{
+
+        h3 {
             margin: 12px;
             font-size: 16px;
             font-weight: bold;
         }
-        abbr{
+
+        abbr {
             cursor: help;
             text-decoration: underline;
             text-decoration-style: dotted;
         }
-        a{
+
+        a {
             color: #868686;
             cursor: pointer;
         }
-        a:hover{
+
+        a:hover {
             text-decoration: underline;
         }
-        .line-error{
+
+        .line-error {
             background: #f8cbcb;
         }
+
         .echo table {
             width: 100%;
         }
+
         .echo pre {
             padding: 16px;
             overflow: auto;
@@ -154,25 +174,29 @@ echo 'Resource';
             border-radius: 3px;
             font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
         }
-        .echo pre > pre {
+
+        .echo pre>pre {
             padding: 0;
             margin: 0;
         }
+
         /* Exception Info */
         .exception {
             margin-top: 20px;
         }
-        .exception .message{
+
+        .exception .message {
             padding: 12px;
             border: 1px solid #ddd;
             border-bottom: 0 none;
             line-height: 18px;
-            font-size:16px;
+            font-size: 16px;
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
-            font-family: Consolas,"Liberation Mono",Courier,Verdana,"微软雅黑",serif;
+            font-family: Consolas, "Liberation Mono", Courier, Verdana, "微软雅黑", serif;
         }
-        .exception .code{
+
+        .exception .code {
             float: left;
             text-align: center;
             color: #fff;
@@ -181,7 +205,8 @@ echo 'Resource';
             border-radius: 4px;
             background: #999;
         }
-        .exception .source-code{
+
+        .exception .source-code {
             padding: 6px;
             border: 1px solid #ddd;
 
@@ -189,116 +214,184 @@ echo 'Resource';
             overflow-x: auto;
 
         }
-        .exception .source-code pre{
+
+        .exception .source-code pre {
             margin: 0;
         }
-        .exception .source-code pre ol{
+
+        .exception .source-code pre ol {
             margin: 0;
             color: #4288ce;
             display: inline-block;
             min-width: 100%;
             box-sizing: border-box;
-            font-size:14px;
-            font-family: "Century Gothic",Consolas,"Liberation Mono",Courier,Verdana,serif;
-            padding-left: <?php echo (isset($source) && !empty($source)) ? parse_padding($source) : 40;  ?>px;
+            font-size: 14px;
+            font-family: "Century Gothic", Consolas, "Liberation Mono", Courier, Verdana, serif;
+            padding-left:
+            <?php echo (isset($source) && !empty($source)) ? parse_padding($source) : 40; ?>
+        px;
         }
-        .exception .source-code pre li{
+
+        .exception .source-code pre li {
             border-left: 1px solid #ddd;
             height: 18px;
             line-height: 18px;
         }
-        .exception .source-code pre code{
+
+        .exception .source-code pre code {
             color: #333;
             height: 100%;
             display: inline-block;
             border-left: 1px solid #fff;
-            font-size:14px;
-            font-family: Consolas,"Liberation Mono",Courier,Verdana,"微软雅黑",serif;
+            font-size: 14px;
+            font-family: Consolas, "Liberation Mono", Courier, Verdana, "微软雅黑", serif;
         }
-        .exception .trace{
+
+        .exception .trace {
             padding: 6px;
             border: 1px solid #ddd;
             border-top: 0 none;
             line-height: 16px;
-            font-size:14px;
-            font-family: Consolas,"Liberation Mono",Courier,Verdana,"微软雅黑",serif;
+            font-size: 14px;
+            font-family: Consolas, "Liberation Mono", Courier, Verdana, "微软雅黑", serif;
         }
+
         .exception .trace h2:hover {
             text-decoration: underline;
             cursor: pointer;
         }
-        .exception .trace ol{
+
+        .exception .trace ol {
             margin: 12px;
         }
-        .exception .trace ol li{
+
+        .exception .trace ol li {
             padding: 2px 4px;
         }
-        .exception div:last-child{
+
+        .exception div:last-child {
             border-bottom-left-radius: 4px;
             border-bottom-right-radius: 4px;
         }
 
         /* Exception Variables */
-        .exception-var table{
+        .exception-var table {
             width: 100%;
             margin: 12px 0;
             box-sizing: border-box;
-            table-layout:fixed;
-            word-wrap:break-word;
+            table-layout: fixed;
+            word-wrap: break-word;
         }
-        .exception-var table caption{
+
+        .exception-var table caption {
             text-align: left;
             font-size: 16px;
             font-weight: bold;
             padding: 6px 0;
         }
-        .exception-var table caption small{
+
+        .exception-var table caption small {
             font-weight: 300;
             display: inline-block;
             margin-left: 10px;
             color: #ccc;
         }
-        .exception-var table tbody{
+
+        .exception-var table tbody {
             font-size: 13px;
-            font-family: Consolas, "Liberation Mono", Courier, "微软雅黑",serif;
+            font-family: Consolas, "Liberation Mono", Courier, "微软雅黑", serif;
         }
-        .exception-var table td{
+
+        .exception-var table td {
             padding: 0 6px;
             vertical-align: top;
             word-break: break-all;
         }
-        .exception-var table td:first-child{
+
+        .exception-var table td:first-child {
             width: 28%;
             font-weight: bold;
             white-space: nowrap;
         }
-        .exception-var table td pre{
+
+        .exception-var table td pre {
             margin: 0;
         }
 
         /* Copyright Info */
-        .copyright{
+        .copyright {
             margin-top: 24px;
             padding: 12px 0;
             border-top: 1px solid #eee;
         }
 
         /* SPAN elements with the classes below are added by prettyprint. */
-        pre.prettyprint .pln { color: #000 }  /* plain text */
-        pre.prettyprint .str { color: #080 }  /* string content */
-        pre.prettyprint .kwd { color: #008 }  /* a keyword */
-        pre.prettyprint .com { color: #800 }  /* a comment */
-        pre.prettyprint .typ { color: #606 }  /* a type name */
-        pre.prettyprint .lit { color: #066 }  /* a literal value */
+        pre.prettyprint .pln {
+            color: #000
+        }
+
+        /* plain text */
+        pre.prettyprint .str {
+            color: #080
+        }
+
+        /* string content */
+        pre.prettyprint .kwd {
+            color: #008
+        }
+
+        /* a keyword */
+        pre.prettyprint .com {
+            color: #800
+        }
+
+        /* a comment */
+        pre.prettyprint .typ {
+            color: #606
+        }
+
+        /* a type name */
+        pre.prettyprint .lit {
+            color: #066
+        }
+
+        /* a literal value */
         /* punctuation, lisp open bracket, lisp close bracket */
-        pre.prettyprint .pun, pre.prettyprint .opn, pre.prettyprint .clo { color: #660 }
-        pre.prettyprint .tag { color: #008 }  /* a markup tag name */
-        pre.prettyprint .atn { color: #606 }  /* a markup attribute name */
-        pre.prettyprint .atv { color: #080 }  /* a markup attribute value */
-        pre.prettyprint .dec, pre.prettyprint .var { color: #606 }  /* a declaration; a variable name */
-        pre.prettyprint .fun { color: red }  /* a function name */
+        pre.prettyprint .pun,
+        pre.prettyprint .opn,
+        pre.prettyprint .clo {
+            color: #660
+        }
+
+        pre.prettyprint .tag {
+            color: #008
+        }
+
+        /* a markup tag name */
+        pre.prettyprint .atn {
+            color: #606
+        }
+
+        /* a markup attribute name */
+        pre.prettyprint .atv {
+            color: #080
+        }
+
+        /* a markup attribute value */
+        pre.prettyprint .dec,
+        pre.prettyprint .var {
+            color: #606
+        }
+
+        /* a declaration; a variable name */
+        pre.prettyprint .fun {
+            color: red
+        }
+
+        /* a function name */
     </style>
 </head>
+
 <body>
 <?php if (\think\facade\App::isDebug()) { ?>
 <?php foreach ($traces as $index => $trace) { ?>
@@ -306,39 +399,50 @@ echo 'Resource';
     <div class="message">
         <div class="info">
             <div>
-                <h2><?php echo "#{$index} [{$trace['code']}]" . sprintf('%s in %s', parse_class($trace['name']), parse_file($trace['file'], $trace['line'], $trace['editor'])); ?></h2>
+                <h2><?php echo "#{$index} [{$trace['code']}]" . sprintf('%s in %s', parse_class($trace['name']), parse_file($trace['file'], $trace['line'], $trace['editor'])); ?>
+                </h2>
             </div>
-            <div><h1><?php echo nl2br(htmlentities($trace['message'])); ?></h1></div>
+            <div>
+                <h1><?php echo nl2br(htmlentities($trace['message'])); ?></h1>
+            </div>
         </div>
     </div>
     <?php if (!empty($trace['source'])) { ?>
     <div class="source-code">
-        <pre class="prettyprint lang-php"><ol start="<?php echo $trace['source']['first']; ?>"><?php foreach ((array) $trace['source']['source'] as $key => $value) { ?><li class="line-<?php echo "{$index}-"; echo $key + $trace['source']['first']; echo $trace['line'] === $key + $trace['source']['first'] ? ' line-error' : ''; ?>"><code><?php echo htmlentities($value); ?></code></li><?php } ?></ol></pre>
+                        <pre
+                                class="prettyprint lang-php"><ol start="<?php echo $trace['source']['first']; ?>"><?php foreach ((array) $trace['source']['source'] as $key => $value) { ?><li class="line-<?php echo "{$index}-";
+                                       echo $key + $trace['source']['first'];
+                                       echo $trace['line'] === $key + $trace['source']['first'] ? ' line-error' : ''; ?>"><code><?php echo htmlentities($value); ?></code></li><?php } ?></ol></pre>
     </div>
-    <?php }?>
+    <?php } ?>
     <div class="trace">
         <h2 data-expand="<?php echo 0 === $index ? '1' : '0'; ?>">Call Stack</h2>
         <ol>
-            <li><?php echo sprintf('in %s', parse_file($trace['file'], $trace['line'], $trace['editor'])); ?></li>
-            <?php foreach ((array) $trace['trace'] as $value) { ?>
+            <li><?php echo sprintf('in %s', parse_file($trace['file'], $trace['line'], $trace['editor'] ?? '')); ?>
+            </li>
+            <?php foreach ((array) $trace['trace'] as $value) {
+                            if(!isset($value['editor']) && isset($value['file'])){
+                                $value['editor'] = getEditorHref($value['file'], $value['line']);
+                            }
+                         ?>
             <li>
                 <?php
-                    // Show Function
-                    if ($value['function']) {
-                        echo sprintf(
-                            'at %s%s%s(%s)',
-                            isset($value['class']) ? parse_class($value['class']) : '',
-                            isset($value['type'])  ? $value['type'] : '',
-                            $value['function'],
-                            isset($value['args'])?parse_args($value['args']):''
-                        );
-                    }
+                                // Show Function
+                                if ($value['function']) {
+                                    echo sprintf(
+                                        'at %s%s%s(%s)',
+                                        isset($value['class']) ? parse_class($value['class']) : '',
+                                        isset($value['type']) ? $value['type'] : '',
+                                        $value['function'],
+                                        isset($value['args']) ? parse_args($value['args']) : ''
+                                    );
+                                }
 
-                    // Show line
-                    if (isset($value['file']) && isset($value['line'])) {
-                        echo sprintf(' in %s', parse_file($value['file'], $value['line'], $value['editor']));
-                    }
-                    ?>
+                                // Show line
+                                if (isset($value['file']) && isset($value['line'])) {
+                                    echo sprintf(' in %s', parse_file($value['file'], $value['line'], $value['editor'] ?? ''));
+                                }
+                                ?>
             </li>
             <?php } ?>
         </ol>
@@ -347,7 +451,9 @@ echo 'Resource';
 <?php } ?>
 <?php } else { ?>
 <div class="exception">
-    <div class="info"><h1><?php echo htmlentities($message); ?></h1></div>
+    <div class="info">
+        <h1><?php echo htmlentities($message); ?></h1>
+    </div>
 </div>
 <?php } ?>
 
@@ -405,19 +511,19 @@ echo 'Resource';
 </div>
 <?php if (\think\facade\App::isDebug()) { ?>
 <script>
-    function $(selector, node){
+    function $(selector, node) {
         var elements;
 
         node = node || document;
-        if(document.querySelectorAll){
+        if (document.querySelectorAll) {
             elements = node.querySelectorAll(selector);
         } else {
-            switch(selector.substr(0, 1)){
+            switch (selector.substr(0, 1)) {
                 case '#':
                     elements = [node.getElementById(selector.substr(1))];
                     break;
                 case '.':
-                    if(document.getElementsByClassName){
+                    if (document.getElementsByClassName) {
                         elements = node.getElementsByClassName(selector.substr(1));
                     } else {
                         elements = get_elements_by_class(selector.substr(1), node);
@@ -431,14 +537,14 @@ echo 'Resource';
 
         function get_elements_by_class(search_class, node, tag) {
             var elements = [], eles,
-                pattern  = new RegExp('(^|\\s)' + search_class + '(\\s|$)');
+                pattern = new RegExp('(^|\\s)' + search_class + '(\\s|$)');
 
             node = node || document;
-            tag  = tag  || '*';
+            tag = tag || '*';
 
             eles = node.getElementsByTagName(tag);
-            for(var i = 0; i < eles.length; i++) {
-                if(pattern.test(eles[i].className)) {
+            for (var i = 0; i < eles.length; i++) {
+                if (pattern.test(eles[i].className)) {
                     elements.push(eles[i])
                 }
             }
@@ -447,24 +553,24 @@ echo 'Resource';
         }
     }
 
-    $.getScript = function(src, func){
+    $.getScript = function (src, func) {
         var script = document.createElement('script');
 
-        script.async  = 'async';
-        script.src    = src;
-        script.onload = func || function(){};
+        script.async = 'async';
+        script.src = src;
+        script.onload = func || function () { };
 
         $('head')[0].appendChild(script);
     }
 
-    ;(function(){
+    ; (function () {
         var files = $('.toggle');
-        var ol    = $('ol', $('.prettyprint')[0]);
-        var li    = $('li', ol[0]);
+        var ol = $('ol', $('.prettyprint')[0]);
+        var li = $('li', ol[0]);
 
         // 短路径和长路径变换
-        for(var i = 0; i < files.length; i++){
-            files[i].ondblclick = function(){
+        for (var i = 0; i < files.length; i++) {
+            files[i].ondblclick = function () {
                 var title = this.title;
 
                 this.title = this.innerHTML;
@@ -487,7 +593,7 @@ echo 'Resource';
                 }
             };
             var traces = $('.trace');
-            for (var i = 0; i < traces.length; i ++) {
+            for (var i = 0; i < traces.length; i++) {
                 var h2 = $('h2', traces[i])[0];
                 expand(h2);
                 h2.onclick = function () {
@@ -496,11 +602,12 @@ echo 'Resource';
             }
         })();
 
-        $.getScript('//cdn.bootcdn.net/ajax/libs/prettify/r298/prettify.min.js', function(){
+        $.getScript('//cdn.bootcdn.net/ajax/libs/prettify/r298/prettify.min.js', function () {
             prettyPrint();
         });
     })();
 </script>
 <?php } ?>
 </body>
+
 </html>
