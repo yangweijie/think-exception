@@ -12,6 +12,7 @@ use think\exception\ValidateException;
 use think\Request;
 use think\Response;
 use Throwable;
+use yangweijie\editor\Editor;
 
 /**
  * 应用异常处理类
@@ -38,100 +39,6 @@ class ExceptionHandle extends Handle {
 		DataNotFoundException::class,
 		ValidateException::class,
 	];
-
-	/**
-	 * Determines both the editor and if ajax should be used.
-	 *
-	 * @param string $filePath
-	 * @param int    $line
-	 *
-	 * @return array
-	 */
-	protected function getEditor($filePath, $line) {
-		$this->editor = config('exception.editor', 'vscode');
-		$options = config('exception.editor_options');
-		$editors = [];
-		foreach ($options as $key => $option) {
-			$editors[$key] = $option['url'];
-		}
-		$this->editors = $editors;
-		if (!$this->editor || (!is_string($this->editor) && !is_callable($this->editor))) {
-			return [];
-		}
-
-		if (is_string($this->editor) && isset($this->editors[$this->editor]) && !is_callable($this->editors[$this->editor])) {
-			return [
-				'ajax' => false,
-				'url' => $this->editors[$this->editor],
-			];
-		}
-
-		if (is_callable($this->editor) || (isset($this->editors[$this->editor]) && is_callable($this->editors[$this->editor]))) {
-			if (is_callable($this->editor)) {
-				$callback = call_user_func($this->editor, $filePath, $line);
-			} else {
-				$callback = call_user_func($this->editors[$this->editor], $filePath, $line);
-			}
-
-			if (empty($callback)) {
-				return [];
-			}
-
-			if (is_string($callback)) {
-				return [
-					'ajax' => false,
-					'url' => $callback,
-				];
-			}
-
-			return [
-				'ajax' => isset($callback['ajax']) ? $callback['ajax'] : false,
-				'url' => isset($callback['url']) ? $callback['url'] : $callback,
-			];
-		}
-
-		return [];
-	}
-
-	public function isWin() {
-		return strpos(PHP_OS, 'WIN') !== false || stripos(php_uname(), 'win') !== false;
-	}
-
-	/**
-	 * Get the editor href for a given file and line, if available.
-	 *
-	 * @param string $filePath
-	 * @param int    $line
-	 *
-	 * @throws InvalidArgumentException If editor resolver does not return a string
-	 *
-	 * @return string|bool
-	 */
-	public function getEditorHref($filePath, $line) {
-		if ($this->isWin() && stripos($filePath, '/mnt') !== false) {
-			$filePath = str_replace('/mnt/', '', $filePath);
-			$filePathArr = explode('/', $filePath);
-			$filePathArr[0] .= ':';
-			$filePath = implode('/', $filePathArr);
-		}
-		$editor = $this->getEditor($filePath, $line);
-		if (empty($editor)) {
-			return false;
-		}
-
-		// Check that the editor is a string, and replace the
-		// %line and %file placeholders:
-		if (!isset($editor['url']) || !is_string($editor['url'])) {
-			throw new \Exception(
-				__METHOD__ . " should always resolve to a string or a valid editor array; got something else instead."
-			);
-		}
-
-		$editor['url'] = str_replace("%line", rawurlencode($line), $editor['url']);
-		$editor['url'] = str_replace("%file", rawurlencode($filePath), $editor['url']);
-
-		return $editor['url'];
-	}
 
 	/**
 	 * 记录异常信息（包括日志或者其它方式记录）
@@ -186,7 +93,7 @@ class ExceptionHandle extends Handle {
 						'name' => get_class($nextException),
 						'file' => $template,
 						'line' => $nextException->getLine() - 1,
-						'editor' => $this->getEditorHref($template, $next_traces[0]['line']),
+						'editor' => Editor::getEditorHref($template, $next_traces[0]['line']),
 						'code' => $this->getCode($nextException),
 						'message' => $this->getMessage($nextException),
 						'trace' => $next_traces,
@@ -197,7 +104,7 @@ class ExceptionHandle extends Handle {
 						'name' => get_class($nextException),
 						'file' => $nextException->getFile(),
 						'line' => $nextException->getLine(),
-						'editor' => $this->getEditorHref($nextException->getFile(), $nextException->getLine()),
+						'editor' => Editor::getEditorHref($nextException->getFile(), $nextException->getLine()),
 						'code' => $this->getCode($nextException),
 						'message' => $this->getMessage($nextException),
 						'trace' => $nextException->getTrace(),

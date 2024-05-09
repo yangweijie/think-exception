@@ -9,7 +9,8 @@
     ],
     "require": {
         "php": ">=7.4",
-        "topthink/framework": "^6.0 | ^6.1 | ^8.0"
+        "topthink/framework": "^6.0 | ^6.1 | ^8.0",
+        "yangweijie/think-editor": "*"
     },
 
     "authors": [
@@ -30,15 +31,12 @@
         "think": {
             "services": [
                 "yangweijie\\exception\\ExceptionService"
-            ],
-            "config": {
-                "exception": "config/config.php"
-            }
+            ]
         }
     },
     "scripts":{
         "post-autoload-dump": [
-            "yangweijie\\exception\\Install::config"
+
         ]
     },
     "minimum-stability": "dev",

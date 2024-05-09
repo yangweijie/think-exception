@@ -94,11 +94,7 @@ echo 'Resource';
 }
 if(!function_exists('getEditorHref')){
 function getEditorHref($file, $line){
-static $handle;
-if(!$handle){
-$handle = new \yangweijie\exception\ExceptionHandle(app());
-}
-return $handle->getEditorHref($file, $line);
+return yangweijie\editor\Editor::getEditorHref($file, $line);
 }
 }
 
